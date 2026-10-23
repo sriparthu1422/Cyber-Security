@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env
+
+# Database files (generated at runtime)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+instance/
+
+# ML Artifacts (large files; regenerate with train_model.py)
+artifacts/*.joblib
+artifacts/*.pkl
+artifacts/*.model
+
+# Uploaded files
+static/uploads/
+
+# Test cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Data (generated; regenerate with generate_sample_data.py)
+data/generated/

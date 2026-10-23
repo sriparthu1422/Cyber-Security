@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mt-5">
+    <h2 class="mb-4"><i class="fas fa-magnifying-glass-chart me-2"></i>Alert Details</h2>
+    <hr>
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>{{ alert.alert_type }}
+                <span class="badge bg-{{ {'Critical':'danger', 'High':'warning', 'Medium':'orange', 'Low':'success'}[alert.severity] }} text-white ms-3">{{ alert.severity }}</span>
+                {% if alert.is_resolved %}
+                    <span class="badge bg-secondary ms-2"><i class="fas fa-check-circle me-1"></i>Resolved</span>
+                {% endif %}
+            </h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <p><strong>Description:</strong> {{ alert.description }}</p>
+                    <p><strong>Timestamp:</strong> {{ alert.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                    <p><strong>Triggered By:</strong> {{ alert.raised_by.username }}</p>
+                    {% if alert.ingested_data_log %}
+                        <p><strong>Source Data:</strong>
+                            <span class="badge bg-info text-dark">{{ alert.ingested_data_log.source_type.replace('_', ' ').title() }}</span>
+                            {% if alert.ingested_data_log.filename %}
+                                (File: {{ alert.ingested_data_log.filename }})
+                            {% endif %}
+                        </p>
+                        {% if alert.ingested_data_log.data_summary %}
+                            <p><strong>Data Summary:</strong> <pre class="bg-light p-2 rounded small">{{ alert.ingested_data_log.data_summary }}</pre></p>
+                        {% endif %}
+                    {% endif %}
+                    {% if alert.is_resolved %}
+                        <p><strong>Resolved By:</strong> {{ alert.resolved_by.username if alert.resolved_by else 'N/A' }}</p>
+                        <p><strong>Resolved On:</strong> {{ alert.resolved_timestamp.strftime('%Y-%m-%d %H:%M:%S') if alert.resolved_timestamp else 'N/A' }}</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <h5>Additional Details:</h5>
+                    {% if details %}
+                        <ul class="list-group">
+                            {% for key, value in details.items() %}
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">{{ key.replace('_', ' ').title() }}:</div>
+                                        <span>{{ value }}</span>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No additional details available.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if not alert.is_resolved %}
+            <h5 class="mt-4">Resolve Alert</h5>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.comment.label(class="form-label") }}
+                    {{ form.comment(class="form-control", rows=3) }}
+                </div>
+                <div class="mb-3">
+                    {{ form.submit(class="btn btn-success") }}
+                </div>
+            </form>
+            {% endif %}
+
+            <a href="{{ url_for('alerts') }}" class="btn btn-secondary mt-3"><i class="fas fa-arrow-left me-2"></i>Back to Alerts</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

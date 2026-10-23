@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-upload me-2"></i>Upload Data for Analysis</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('ingest_data') }}" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.log_file.label(class="form-label") }}
+                        {{ form.log_file(class="form-control" + (' is-invalid' if form.log_file.errors else '')) }}
+                        {% for error in form.log_file.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.source_type.label(class="form-label") }}
+                        {{ form.source_type(class="form-select" + (' is-invalid' if form.source_type.errors else '')) }}
+                        {% for error in form.source_type.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+                <div class="alert alert-info mt-4">
+                    <strong>Note:</strong> This system simulates real-time ingestion by processing uploaded files. In a production environment, data would be streamed directly from your network and systems via agents or APIs. Uploaded files here represent samples of such data (e.g., a network flow log, a system event log, an email content sample).
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

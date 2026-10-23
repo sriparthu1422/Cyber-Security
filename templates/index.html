@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron text-center mt-5 p-5 bg-white rounded shadow-sm">
+    <h1 class="display-4"><i class="fas fa-fingerprint text-primary me-3"></i>AI-Driven Cybersecurity Threat Identification</h1>
+    <p class="lead">Proactive threat detection for financial institutions using advanced Machine Learning.</p>
+    <hr class="my-4">
+    <p>Leverage cutting-edge AI to safeguard your digital assets against evolving cyber threats.</p>
+    <p class="lead mt-4">
+        {% if not current_user.is_authenticated %}
+            <a class="btn btn-primary btn-lg me-3" href="{{ url_for('register') }}" role="button"><i class="fas fa-user-plus me-2"></i>Register Now</a>
+            <a class="btn btn-secondary btn-lg" href="{{ url_for('login') }}" role="button"><i class="fas fa-sign-in-alt me-2"></i>Login</a>
+        {% else %}
+            <a class="btn btn-primary btn-lg" href="{{ url_for('dashboard') }}" role="button"><i class="fas fa-chart-line me-2"></i>Go to Dashboard</a>
+        {% endif %}
+    </p>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <i class="fas fa-traffic-light me-2"></i>Real-time Data Ingestion
+            </div>
+            <div class="card-body">
+                <p class="card-text">Ingest and process network traffic, system logs, user activity, and transaction records in real-time for immediate analysis.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-warning text-dark">
+                <i class="fas fa-user-secret me-2"></i>Behavioral Anomaly Detection
+            </div>
+            <div class="card-body">
+                <p class="card-text">Identify deviations from baseline behaviors of users and systems to uncover insider threats and compromised accounts.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-danger text-white">
+                <i class="fas fa-virus me-2"></i>Advanced Malware Detection
+            </div>
+            <div class="card-body">
+                <p class="card-text">Utilize machine learning to detect new and polymorphic malware strains that bypass traditional signature-based methods.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-info text-white">
+                <i class="fas fa-envelope-open-text me-2"></i>Intelligent Phishing Detection
+            </div>
+            <div class="card-body">
+                <p class="card-text">Analyze email content, headers, and sender behavior to identify sophisticated phishing and spear-phishing attacks.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <i class="fas fa-chart-line me-2"></i>Network Intrusion Detection
+            </div>
+            <div class="card-body">
+                <p class="card-text">Monitor network traffic patterns for suspicious activities, enabling early detection and prevention of network-based attacks.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-secondary text-white">
+                <i class="fas fa-brain me-2"></i>Adaptive Learning & UEBA
+            </div>
+            <div class="card-body">
+                <p class="card-text">Continuously adapt and improve detection accuracy over time, with a focus on User and Entity Behavior Analytics.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

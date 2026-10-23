@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mt-5">
+    <h2 class="mb-4"><i class="fas fa-database me-2"></i>Threat Intelligence Database</h2>
+    <hr>
+    <div class="mb-3">
+        <p>This section displays Indicators of Compromise (IOCs) pulled from integrated threat intelligence feeds.</p>
+        <button class="btn btn-info btn-sm" onclick="location.reload();"><i class="fas fa-sync-alt me-1"></i>Refresh Threat Intel (Simulated)</button>
+        <small class="text-muted ms-3"> (Initial sync happens on app startup. Click to simulate a refresh.)</small>
+    </div>
+
+    {% if iocs.items %}
+        <div class="row">
+            {% for ioc in iocs.items %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100 ioc-card">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">{{ ioc.ioc_type.replace('_', ' ').title() }}</h6>
+                            <h5 class="card-title text-break">{{ ioc.ioc_value }}</h5>
+                            <p class="card-text"><strong>Threat:</strong> {{ ioc.threat_name or 'N/A' }}</p>
+                            <p class="card-text"><strong>Source:</strong> {{ ioc.source or 'N/A' }}</p>
+                            <p class="card-text"><strong>Severity:</strong> <span class="badge bg-{{ {'Critical':'danger', 'High':'warning', 'Medium':'orange', 'Low':'success'}[ioc.severity or 'Low'] }}">{{ ioc.severity or 'N/A' }}</span></p>
+                            <p class="card-text"><small class="text-muted">Last Updated: {{ ioc.last_updated.strftime('%Y-%m-%d %H:%M:%S') }}</small></p>
+                            {% if ioc.description %}
+                                <p class="card-text"><small>Description: {{ ioc.description[:100] }}{% if ioc.description|length > 100 %}...{% endif %}</small></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if iocs.has_prev %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('threat_intelligence', page=iocs.prev_num) }}">Previous</a></li>
+                {% endif %}
+                {% for page_num in iocs.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                    {% if page_num %}
+                        {% if iocs.page == page_num %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ page_num }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="{{ url_for('threat_intelligence', page=page_num) }}">{{ page_num }}</a></li>
+                        {% endif %}
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if iocs.has_next %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('threat_intelligence', page=iocs.next_num) }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <p>No threat intelligence indicators found. The system may not have synced with external feeds yet or the API key is invalid.</p>
+    {% endif %}
+</div>
+{% endblock content %}

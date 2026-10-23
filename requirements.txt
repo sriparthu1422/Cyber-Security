@@ -1,0 +1,46 @@
+# AI-Based Cybersecurity Threat Detection System
+# Requirements - Python 3.14.x compatible
+
+# Web Framework - FastAPI
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+
+# Data Processing
+pandas==2.2.3
+numpy==2.1.3
+
+# Machine Learning
+scikit-learn==1.5.2
+joblib==1.4.2
+
+# Database
+sqlalchemy==2.0.36
+
+# Validation
+pydantic==2.10.3
+pydantic-settings==2.6.1
+
+# Streamlit Dashboard
+streamlit==1.40.2
+plotly==5.24.1
+
+# Testing
+pytest==8.3.4
+httpx==0.28.1
+pytest-asyncio==0.24.0
+
+# Utilities
+python-multipart==0.0.19
+python-dotenv==1.0.1
+aiofiles==24.1.0
+
+# Legacy Flask app (preserved from original)
+flask==3.1.0
+flask-sqlalchemy==3.1.1
+flask-login==0.6.3
+flask-bcrypt==1.0.1
+flask-wtf==1.2.2
+wtforms==3.2.2
+werkzeug==3.1.3
+email-validator==2.2.0
+requests==2.32.3

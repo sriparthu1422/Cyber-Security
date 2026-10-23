@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mt-5">
+    <h2 class="mb-4"><i class="fas fa-file-contract me-2"></i>Cybersecurity Reports</h2>
+    <hr>
+    <p class="lead">Overview of threat trends and system performance.</p>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Alerts by Type</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="alertsByTypeChart"></canvas>
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>Alert Type</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for type, count in alerts_by_type.items() %}
+                            <tr>
+                                <td>{{ type }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Alerts by Severity</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="alertsBySeverityChart"></canvas>
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>Severity</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for severity, count in alerts_by_severity.items() %}
+                            <tr>
+                                <td>{{ severity }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info">
+        <strong>Note:</strong> This is a basic reporting interface. For a production system, you would integrate with dedicated BI tools (e.g., Tableau, Power BI) or use more advanced charting libraries for interactive, drill-down reports. Data could be filtered by time range, source, user, etc.
+    </div>
+</div>
+{% endblock content %}
